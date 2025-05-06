@@ -1,16 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterMenu from "@/components/MenuPage/Filter";
 import MenuList from "@/components/MenuPage/ListMenu";
 import SearchMenu from "@/components/MenuPage/Search";
 import LoadingPage from "../loading";
+import PesanModal from "@/components/MenuPage/PesanModal";
 
 const MenuPage = () => {
   const [jenisMenu, setJenisMenu] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [activeSearch, setActiveSearch] = useState(""); // hanya aktif saat tombol search diklik
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [jumlah, setJumlah] = useState(1);
+  const [jenis, setJenis] = useState("Dingin");
+  const [note, setNote] = useState("");
+  const [totalHarga, setTotalHarga] = useState(0);
+  const [hargaSatuan, setHargaSatuan] = useState(0);
 
   const handleFilterChange = (value) => {
     setIsLoading(true);
@@ -30,6 +38,40 @@ const MenuPage = () => {
       setIsLoading(false);
     }, 500);
   };
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setTotalHarga(item.harga);
+    setHargaSatuan(item.harga);
+    setIsOpenModal((prev) => !prev);
+    if (isOpenModal === false) {
+      setJumlah(1);
+      setJenis("Dingin");
+      setNote("");
+    }
+  };
+
+  const handleTambahJumlah = () => {
+    setJumlah((prev) => prev + 1);
+  };
+  const handleKurangJumlah = () => {
+    if (jumlah > 1) {
+      setJumlah((prev) => prev - 1);
+    }
+  };
+  const handleChangeJenis = (event) => {
+    const selectedValue = event.target.value;
+    setJenis(selectedValue);
+  };
+
+  const handleChangeNote = (event) => {
+    const selectedValue = event.target.value;
+    setNote(selectedValue);
+
+    // alert(note);
+  };
+  useEffect(() => {
+    setTotalHarga(jumlah * hargaSatuan);
+  }, [jumlah, hargaSatuan]);
 
   return (
     <section className="min-h-screen bg-polygon pt-10 flex flex-col items-center">
@@ -51,8 +93,29 @@ const MenuPage = () => {
       {isLoading ? (
         <LoadingPage />
       ) : (
-        <MenuList jenisMenu={jenisMenu} search={activeSearch} />
+        <MenuList
+          jenisMenu={jenisMenu}
+          search={activeSearch}
+          openModal={handleOpenModal}
+        />
       )}
+      <div>
+        <PesanModal
+          isOpenModal={isOpenModal}
+          setIsOpenModal={setIsOpenModal}
+          selectedItem={selectedItem}
+          jenis={jenis}
+          jumlah={jumlah}
+          handleKurangJumlah={handleKurangJumlah}
+          handleTambahJumlah={handleTambahJumlah}
+          handleChangeJenis={handleChangeJenis}
+          setJumlah={setJumlah}
+          note={note}
+          setNote={setNote}
+          handleChangeNote={handleChangeNote}
+          totalHarga={totalHarga}
+        />
+      </div>
     </section>
   );
 };

@@ -80,7 +80,7 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
             </li>
             <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
               <Link
-                href="/about"
+                href="/keranjang"
                 className="flex items-center gap-4 hover:text-secondary"
               >
                 <ShoppingBasket className="md:hidden" />

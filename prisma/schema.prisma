@@ -43,8 +43,10 @@ model keranjang_menu {
   jumlah       Int       @default(1)
   jenis        String?   @db.VarChar(255)
   note         String?   @db.VarChar(255)
-  created_at   DateTime? @db.Timestamp(0)
-  updated_at   DateTime? @db.Timestamp(0)
+  harga        Decimal?   @db.Decimal(10, 2)
+  total_harga  Decimal?   @db.Decimal(10, 2)
+  created_at   DateTime? @default(now()) @map("created_at")
+  updated_at   DateTime? @updatedAt @map("updated_at") @db.Timestamp(0)
   keranjang    keranjang @relation(fields: [keranjang_id], references: [id], onDelete: Cascade)
   menu         menu      @relation(fields: [menu_id], references: [id], onDelete: Cascade)
 }

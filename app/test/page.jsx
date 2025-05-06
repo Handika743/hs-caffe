@@ -25,6 +25,7 @@ const TestPage = () => {
         <p>Email: {session.user.email}</p>
         <p>Role: {session.user.role}</p>
         <p>Image: {session.user.image}</p>
+        <p>id: {session.user.id}</p>
       </div>
     </div>
   );

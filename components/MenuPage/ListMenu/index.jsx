@@ -4,8 +4,13 @@ import React, { useEffect, useState } from "react";
 import PesanButton from "./PesanButton";
 import LoadingPage from "@/app/loading";
 
-const MenuList = ({ jenisMenu, search }) => {
+const MenuList = ({ jenisMenu, search, openModal }) => {
   const [listMenu, setListMenu] = useState([]);
+  const test = (item) => {
+    alert(
+      `Nama: ${item.nama_menu}, Harga: ${item.harga}, Jenis: ${item.jenis_menu}`
+    );
+  };
 
   useEffect(() => {
     // <LoadingPage />;
@@ -48,7 +53,7 @@ const MenuList = ({ jenisMenu, search }) => {
             <p>Rp {Number(item.harga).toLocaleString("id-ID")}</p>
           </div>
           <div className="absolute bottom-0 flex w-full items-center justify-center">
-            <PesanButton />
+            <PesanButton click={() => openModal(item)} />
           </div>
         </div>
       ))}
