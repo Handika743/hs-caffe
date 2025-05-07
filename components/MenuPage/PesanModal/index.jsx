@@ -26,6 +26,7 @@ const PesanModal = ({
   const handleTambahKeranjangMenu = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
+    alert("bisa diklik");
 
     const data = {
       menu_id: selectedItem.id,
@@ -82,11 +83,7 @@ const PesanModal = ({
           className="absolute right-5 top-3 hover:text-primary duration-200"
         />
         <div className="h-[2px] w-full bg-secondary block mb-4"></div>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={handleTambahKeranjangMenu}
-          type="submit"
-        >
+        <form className="flex flex-col gap-4">
           {/* ... bagian input form lainnya ... */}
           <div className="hidden">
             <label htmlFor="id_menu" className="w-1/2 ">
@@ -199,10 +196,8 @@ const PesanModal = ({
             </p>
           </div>
           <button
-            type="submit"
-            onClick={() => {
-              alert("Tombol berhasil diklik");
-            }}
+            type="button"
+            onClick={handleTambahKeranjangMenu}
             className="w-full bg-red-500 text-white p-3 rounded-lg"
           >
             Tambah
