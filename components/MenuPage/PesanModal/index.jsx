@@ -195,10 +195,12 @@ const PesanModal = ({
             </p>
           </div>
           <button
-            type="submit"
-            className="flex items-center w-full bg-secondary text-trirdary p-1.5 rounded-2xl hover:scale-105 duration-200 "
-            onClick={handleTambahKeranjangMenu}
-            disabled={isSubmitting}
+            type="button"
+            onClick={() => {
+              alert("Tombol berhasil diklik");
+              handleTambahKeranjangMenu();
+            }}
+            className="w-full bg-red-500 text-white p-3 rounded-lg"
           >
             Tambah
           </button>
