@@ -28,42 +28,35 @@ const PesanModal = ({
     setIsSubmitting(true);
     alert("bisa diklik");
 
-    try {
-      const data = {
-        menu_id: selectedItem.id,
-        nama_menu: selectedItem.nama_menu,
-        harga: selectedItem.harga,
-        total_harga: totalHarga,
-        jumlah,
-        jenis,
-        note,
-      };
+    const data = {
+      menu_id: selectedItem.id,
+      nama_menu: selectedItem.nama_menu,
+      harga: selectedItem.harga,
+      total_harga: totalHarga,
+      jumlah,
+      jenis,
+      note,
+    };
 
-      const respon = await fetch("/api/keranjang", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const result = await respon.json();
-      if (result.isCreated) {
-        setIsCreated(true);
-        alert("Menu Ditambahkan Ke Keranjang");
-        setIsOpenModal(false); // Tutup modal setelah berhasil
-        router.refresh();
-      } else {
-        // Tambahkan penanganan error jika permintaan gagal
-        console.error("Gagal menambahkan ke keranjang:", result);
-        alert("Gagal menambahkan menu ke keranjang.");
-      }
-    } catch (error) {
-      console.error("Terjadi error:", error);
-      alert("Terjadi error saat menambahkan ke keranjang.");
-    } finally {
-      setIsSubmitting(false); // Pastikan selalu set ke false setelah selesai
+    const respon = await fetch("/api/keranjang", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    alert(data);
+    const result = await respon.json();
+    setIsSubmitting(false); // Set isSubmitting kembali setelah respons diterima
+    if (result.isCreated) {
+      setIsCreated(true);
+      alert("Menu Ditambahkan Ke Keranjang");
+      setIsOpenModal(false); // Tutup modal setelah berhasil
+      router.refresh();
+    } else {
+      // Tambahkan penanganan error jika permintaan gagal
+      console.error("Gagal menambahkan ke keranjang:", result);
+      alert("Gagal menambahkan menu ke keranjang.");
     }
   };
-
   if (!selectedItem) return null;
 
   return (
