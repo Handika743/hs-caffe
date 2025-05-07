@@ -82,7 +82,11 @@ const PesanModal = ({
           className="absolute right-5 top-3 hover:text-primary duration-200"
         />
         <div className="h-[2px] w-full bg-secondary block mb-4"></div>
-        <form className="flex flex-col gap-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleTambahKeranjangMenu}
+          type="submit"
+        >
           {/* ... bagian input form lainnya ... */}
           <div className="hidden">
             <label htmlFor="id_menu" className="w-1/2 ">
@@ -195,10 +199,9 @@ const PesanModal = ({
             </p>
           </div>
           <button
-            type="button"
+            type="submit"
             onClick={() => {
               alert("Tombol berhasil diklik");
-              handleTambahKeranjangMenu();
             }}
             className="w-full bg-red-500 text-white p-3 rounded-lg"
           >
