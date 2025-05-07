@@ -6,6 +6,7 @@ import MenuList from "@/components/MenuPage/ListMenu";
 import SearchMenu from "@/components/MenuPage/Search";
 import LoadingPage from "../loading";
 import PesanModal from "@/components/MenuPage/PesanModal";
+import AuthGuard from "@/components/AuthGuard";
 
 const MenuPage = () => {
   const [jenisMenu, setJenisMenu] = useState("");
@@ -74,49 +75,51 @@ const MenuPage = () => {
   }, [jumlah, hargaSatuan]);
 
   return (
-    <section className="min-h-screen bg-polygon pt-10 flex flex-col items-center">
-      <h1 className="text-center md:text-2xl text-lg font-bold uppercase bg-secondary p-2 rounded-md border border-trirdary">
-        Menu <span className="text-trirdary">HS</span>Café
-      </h1>
-      <div className="p-2 flex gap-2">
-        <div className="w-1/2">
-          <FilterMenu onChange={handleFilterChange} selected={jenisMenu} />
+    <AuthGuard>
+      <section className="min-h-screen bg-polygon pt-10 flex flex-col items-center">
+        <h1 className="text-center md:text-2xl text-lg font-bold uppercase bg-secondary p-2 rounded-md border border-trirdary">
+          Menu <span className="text-trirdary">HS</span>Café
+        </h1>
+        <div className="p-2 flex gap-2">
+          <div className="w-1/2">
+            <FilterMenu onChange={handleFilterChange} selected={jenisMenu} />
+          </div>
+          <div className="w-1/2">
+            <SearchMenu
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onSearchClick={handleSearchClick}
+            />
+          </div>
         </div>
-        <div className="w-1/2">
-          <SearchMenu
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-            onSearchClick={handleSearchClick}
+        {isLoading ? (
+          <LoadingPage />
+        ) : (
+          <MenuList
+            jenisMenu={jenisMenu}
+            search={activeSearch}
+            openModal={handleOpenModal}
+          />
+        )}
+        <div>
+          <PesanModal
+            isOpenModal={isOpenModal}
+            setIsOpenModal={setIsOpenModal}
+            selectedItem={selectedItem}
+            jenis={jenis}
+            jumlah={jumlah}
+            handleKurangJumlah={handleKurangJumlah}
+            handleTambahJumlah={handleTambahJumlah}
+            handleChangeJenis={handleChangeJenis}
+            setJumlah={setJumlah}
+            note={note}
+            setNote={setNote}
+            handleChangeNote={handleChangeNote}
+            totalHarga={totalHarga}
           />
         </div>
-      </div>
-      {isLoading ? (
-        <LoadingPage />
-      ) : (
-        <MenuList
-          jenisMenu={jenisMenu}
-          search={activeSearch}
-          openModal={handleOpenModal}
-        />
-      )}
-      <div>
-        <PesanModal
-          isOpenModal={isOpenModal}
-          setIsOpenModal={setIsOpenModal}
-          selectedItem={selectedItem}
-          jenis={jenis}
-          jumlah={jumlah}
-          handleKurangJumlah={handleKurangJumlah}
-          handleTambahJumlah={handleTambahJumlah}
-          handleChangeJenis={handleChangeJenis}
-          setJumlah={setJumlah}
-          note={note}
-          setNote={setNote}
-          handleChangeNote={handleChangeNote}
-          totalHarga={totalHarga}
-        />
-      </div>
-    </section>
+      </section>
+    </AuthGuard>
   );
 };
 

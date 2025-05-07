@@ -26,7 +26,7 @@ const PesanModal = ({
   const handleTambahKeranjangMenu = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
-    alert("bisa diklik");
+    // alert("bisa diklik");
 
     const data = {
       menu_id: selectedItem.id,
@@ -43,7 +43,7 @@ const PesanModal = ({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const result = await respon.json();
     setIsSubmitting(false); // Set isSubmitting kembali setelah respons diterima
     if (result.isCreated) {
@@ -198,7 +198,7 @@ const PesanModal = ({
           <button
             type="button"
             onClick={handleTambahKeranjangMenu}
-            className="w-full bg-red-500 text-white p-3 rounded-lg"
+            className="w-full bg-secondary text-white p-3 rounded-lg hover:scale-105 duration-200"
           >
             Tambah
           </button>

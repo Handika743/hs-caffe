@@ -33,9 +33,32 @@ export async function POST(req) {
   return Response.json({ status: 200, isCreated: true });
 }
 
-export async function GET() {
-  const keranjang = await prisma.keranjang_menu.findMany();
-  return new Response(JSON.stringify(keranjang, bigintReplacer), {
-    headers: { "Content-Type": "application/json" },
+export async function GET(req) {
+  const session = await auth();
+  const user_id = session.user.id;
+  // Ambil user_id dari header atau session
+
+  if (!user_id) {
+    return new Response("User ID not found", { status: 400 });
+  }
+
+  const keranjang = await prisma.keranjang.findUnique({
+    where: { user_id: user_id },
   });
+
+  if (!keranjang) {
+    return new Response("Keranjang not found", { status: 404 });
+  }
+
+  const keranjangMenu = await prisma.keranjang_menu.findMany({
+    where: { keranjang_id: keranjang.id },
+    include: {
+      menu: {
+        // Mengambil informasi terkait menu yang ada di keranjang
+        select: { nama_menu: true, image: true, harga: true },
+      },
+    },
+  });
+
+  return new Response(JSON.stringify(keranjangMenu, bigintReplacer));
 }
