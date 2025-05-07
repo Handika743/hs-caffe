@@ -43,7 +43,7 @@ const PesanModal = ({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    alert(data);
+    alert(JSON.stringify(data));
     const result = await respon.json();
     setIsSubmitting(false); // Set isSubmitting kembali setelah respons diterima
     if (result.isCreated) {
