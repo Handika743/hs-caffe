@@ -61,18 +61,18 @@ const PesanModal = ({
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-50 bg-primary/50 flex items-center justify-center
-      transition-opacity duration-200
-      ${
-        isOpenModal
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
-      }
-    `}
+        transition-opacity duration-200
+        ${
+          isOpenModal
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }
+      `}
     >
       <div
         className={`bg-trirdary relative text-secondary px-10 py-5 rounded-lg transform transition-all duration-200
-        ${isOpenModal ? "scale-100 opacity-100" : "scale-0 opacity-0"}
-      `}
+          ${isOpenModal ? "scale-100 opacity-100" : "scale-0 opacity-0"}
+        `}
       >
         <div className=" text-lg font-bold text-center">
           <h1>Pesan</h1>
@@ -195,8 +195,8 @@ const PesanModal = ({
             </p>
           </div>
           <button
-            type="button"
-            className="flex items-center w-full bg-secondary text-trirdary p-1.5 rounded-2xl hover:scale-105 duration-200"
+            type="submit"
+            className="flex items-center w-full bg-secondary text-trirdary p-1.5 rounded-2xl hover:scale-105 duration-200 p-2"
             onClick={handleTambahKeranjangMenu}
             disabled={isSubmitting}
           >
