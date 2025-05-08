@@ -29,8 +29,11 @@ export async function POST(req) {
   console.log(data);
 
   const createKeranjangMenu = await prisma.keranjang_menu.create({ data });
-
-  return Response.json({ status: 200, isCreated: true });
+  if (!createKeranjangMenu) {
+    return Response.json({ status: 500, isCreated: false });
+  } else {
+    return Response.json({ status: 200, isCreated: true });
+  }
 }
 
 export async function GET(req) {
@@ -61,4 +64,60 @@ export async function GET(req) {
   });
 
   return new Response(JSON.stringify(keranjangMenu, bigintReplacer));
+}
+
+export async function PUT(req) {
+  const { id, menu_id, harga, total_harga, nama_menu, jumlah, jenis, note } =
+    await req.json();
+
+  const session = await auth();
+  const user_id = session.user.id;
+  // Ambil user_id dari header atau session
+
+  if (!user_id) {
+    return new Response("User ID not found", { status: 400 });
+  }
+
+  const keranjang = await prisma.keranjang.findUnique({
+    where: { user_id: user_id },
+  });
+
+  const data = {
+    keranjang_id: keranjang.id,
+    menu_id,
+    harga,
+    total_harga,
+    nama_menu,
+    jumlah,
+    jenis,
+    note,
+  };
+  console.log(data);
+
+  const EditKeranjangMenu = await prisma.keranjang_menu.update({
+    where: { id: id },
+    data,
+  });
+  if (!EditKeranjangMenu) {
+    return Response.json({ status: 500, isCreated: false });
+  } else {
+    return Response.json({ status: 200, isCreated: true });
+  }
+}
+
+export async function DELETE(req) {
+  const { id } = await req.json();
+
+  const data = {
+    id,
+  };
+  console.log(data);
+  const deleteKeranjangMenu = await prisma.keranjang_menu.delete({
+    where: { id: id },
+  });
+  if (!deleteKeranjangMenu) {
+    return Response.json({ status: 500, isCreated: false });
+  } else {
+    return Response.json({ status: 200, isCreated: true });
+  }
 }

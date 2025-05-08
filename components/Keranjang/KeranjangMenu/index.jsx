@@ -2,7 +2,11 @@ import React from "react";
 import Image from "next/image";
 import { SquarePen, Trash2 } from "lucide-react";
 
-const KeranjangMenu = ({ keranjangMenu }) => {
+const KeranjangMenu = ({
+  keranjangMenu,
+  handleEditModal,
+  handleDeleteModal,
+}) => {
   return (
     <div>
       {keranjangMenu.length === 0 ? (
@@ -35,6 +39,13 @@ const KeranjangMenu = ({ keranjangMenu }) => {
                         <td className="md:px-5 px-2">:</td>
                         <td className="md:px-5 px-2">{item.jumlah}</td>
                       </tr>
+                      {item.jenis ? (
+                        <tr className="">
+                          <td className="md:px-5 px-2">Jenis</td>
+                          <td className="md:px-5 px-2">:</td>
+                          <td className="md:px-5 px-2">{item.jenis}</td>
+                        </tr>
+                      ) : null}
 
                       <tr>
                         <td className="md:px-5 px-2">Total Harga</td>
@@ -47,10 +58,16 @@ const KeranjangMenu = ({ keranjangMenu }) => {
                   </table>
                 </div>
                 <div className="flex  flex-col md:flex-row gap-4 items-center">
-                  <button className="bg-green-600 p-1.5 rounded-md text-trirdary hover:scale-105 duration-200 h-fit">
+                  <button
+                    className="bg-green-600 p-1.5 rounded-md text-trirdary hover:scale-105 duration-200 h-fit"
+                    onClick={() => handleEditModal(item)}
+                  >
                     <SquarePen className="w-[20px] h-[20px] md:w-[30px] md:h-[30px]" />
                   </button>
-                  <button className="bg-red-600 p-1.5 rounded-md text-trirdary  hover:scale-105 duration-200 h-fit">
+                  <button
+                    className="bg-red-600 p-1.5 rounded-md text-trirdary  hover:scale-105 duration-200 h-fit"
+                    onClick={() => handleDeleteModal(item)}
+                  >
                     <Trash2 className="w-[20px] h-[20px] md:w-[30px] md:h-[30px]" />
                   </button>
                 </div>

@@ -198,6 +198,7 @@ const PesanModal = ({
           <button
             type="button"
             onClick={handleTambahKeranjangMenu}
+            disabled={isSubmitting}
             className="w-full bg-secondary text-white p-3 rounded-lg hover:scale-105 duration-200"
           >
             Tambah
