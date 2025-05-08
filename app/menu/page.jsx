@@ -16,7 +16,7 @@ const MenuPage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [jumlah, setJumlah] = useState(1);
-  const [jenis, setJenis] = useState("Dingin");
+  const [jenis, setJenis] = useState("");
   const [note, setNote] = useState("");
   const [totalHarga, setTotalHarga] = useState(0);
   const [hargaSatuan, setHargaSatuan] = useState(0);
@@ -46,7 +46,7 @@ const MenuPage = () => {
     setIsOpenModal((prev) => !prev);
     if (isOpenModal === false) {
       setJumlah(1);
-      setJenis("Dingin");
+      setJenis("");
       setNote("");
     }
   };
