@@ -27,6 +27,15 @@ const PesanModal = ({
     event.preventDefault();
     setIsSubmitting(true);
     // alert("bisa diklik");
+    if (
+      (selectedItem.jenis_menu === "Kopi" ||
+        selectedItem.jenis_menu === "Teh") &&
+      !jenis
+    ) {
+      alert("Pilih jenis (Dingin / Hangat)");
+      setIsSubmitting(false);
+      return;
+    }
 
     const data = {
       menu_id: selectedItem.id,
@@ -159,7 +168,11 @@ const PesanModal = ({
                 className="w-1/2 border border-secondary p-1 rounded-md"
                 value={jenis}
                 onChange={handleChangeJenis}
+                required
               >
+                <option value="" disabled>
+                  Pilih Jenis
+                </option>
                 <option value="Dingin">Dingin</option>
                 <option value="Hangat">Hangat</option>
               </select>
