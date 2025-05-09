@@ -6,6 +6,7 @@ import KeranjangMenu from "@/components/Keranjang/KeranjangMenu";
 import LoadingPage from "../loading";
 import EditKeranjangModal from "@/components/Keranjang/KeranjangMenu/EditKeranjangModal";
 import DeleteKeranjangModal from "@/components/Keranjang/KeranjangMenu/DeleteKeranjangModal";
+import OrderComponent from "@/components/Keranjang/KeranjangMenu/OrderComponent";
 
 const KeranjangPage = () => {
   const { data: session } = useSession();
@@ -32,6 +33,18 @@ const KeranjangPage = () => {
     }
   }, [session]);
 
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  const handleSetItem = (e, item) => {
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setCheckedItems((prev) => [...prev, item]);
+    } else {
+      setCheckedItems((prev) => prev.filter((i) => i.id !== item.id));
+    }
+    console.log("Checked items:", checkedItems);
+  };
   const handleEditModal = (item) => {
     setIsEditModal((prev) => !prev);
     setSelectedItem(item);
@@ -41,35 +54,53 @@ const KeranjangPage = () => {
     setIsDeleteModal((prev) => !prev);
     setSelectedItem(item);
   };
+
+  const handleCheckAll = () => {
+    if (checkedItems.length === keranjangMenu.length) {
+      // Semua item sudah dicentang → batalkan semua
+      setCheckedItems([]);
+    } else {
+      setCheckedItems(keranjangMenu);
+    }
+    console.log("Checked items:", checkedItems);
+  };
   return (
-    <div className="px-10 flex flex-col">
-      <h1 className="font-bold text-2xl text-center p-10">Keranjang</h1>
-      {isLoading ? (
-        <LoadingPage />
-      ) : (
-        <KeranjangMenu
-          keranjangMenu={keranjangMenu}
-          handleEditModal={handleEditModal}
-          handleDeleteModal={handleDeleteModal}
-        />
-      )}
-      <div>
-        <EditKeranjangModal
-          handleEditModal={handleEditModal}
-          isEditModal={isEditModal}
-          selectedItem={selectedItem}
-          setIsEditModal={setIsEditModal}
-        />
+    <>
+      <div className="px-10 flex flex-col">
+        <h1 className="font-bold text-2xl text-center p-10">Keranjang</h1>
+        {isLoading ? (
+          <LoadingPage />
+        ) : (
+          <KeranjangMenu
+            keranjangMenu={keranjangMenu}
+            handleEditModal={handleEditModal}
+            handleDeleteModal={handleDeleteModal}
+            handleSetItem={handleSetItem}
+            handleCheckAll={handleCheckAll}
+            checkedItems={checkedItems}
+          />
+        )}
+        <div>
+          <EditKeranjangModal
+            handleEditModal={handleEditModal}
+            isEditModal={isEditModal}
+            selectedItem={selectedItem}
+            setIsEditModal={setIsEditModal}
+          />
+        </div>
+        <div>
+          <DeleteKeranjangModal
+            handleDeleteModal={handleDeleteModal}
+            isDeleteModal={isDeleteModal}
+            selectedItem={selectedItem}
+            setIsDeleteModal={setIsDeleteModal}
+          />
+        </div>
       </div>
       <div>
-        <DeleteKeranjangModal
-          handleDeleteModal={handleDeleteModal}
-          isDeleteModal={isDeleteModal}
-          selectedItem={selectedItem}
-          setIsDeleteModal={setIsDeleteModal}
-        />
+        <OrderComponent checkedItems={checkedItems} />
       </div>
-    </div>
+    </>
   );
 };
 

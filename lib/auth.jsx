@@ -7,7 +7,7 @@ import { compareSync } from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 86400 },
   pages: {
     signIn: "/login",
   },
