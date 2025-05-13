@@ -15,7 +15,7 @@ model User {
   created_at    DateTime?  @db.Timestamp(0)
   updated_at    DateTime?  @db.Timestamp(0)
   no_handphone  String?    @db.VarChar(20)
-  role          String?    @default("user") @db.VarChar(50)
+  role          String?    @default("User") @db.VarChar(50)
   image         String?    @db.VarChar(255)
   emailVerified DateTime?  @map("email_verified")
   orders        Order[]

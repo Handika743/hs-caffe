@@ -11,7 +11,13 @@ import Link from "next/link";
 import { useState } from "react";
 import UserInfoDropDown from "./UserInfoDropDown";
 
-const NavMenu = ({ isOpen, handleDropDown, isOpenDropDown }) => {
+const NavMenu = ({
+  isOpen,
+  handleDropDown,
+
+  click,
+  isOpenDropDown,
+}) => {
   return (
     <div
       className={`flex   absolute top-20 right-0  md:static md:h-20 bg-primary h-[calc(100vh-80px)] min-w-[200px] origin-right duration-300 ease-in-out scale-x-0 ${
@@ -50,12 +56,9 @@ const NavMenu = ({ isOpen, handleDropDown, isOpenDropDown }) => {
             </li>
           </Link>
         </ul>
-        {/* <div className="md:hidden ">
-          <UserInfoDropDown
-            click={handleDropDown}
-            isOpenDropDown={isOpenDropDown}
-          />
-        </div> */}
+        <div className="md:hidden ">
+          <UserInfoDropDown click={click} isOpenDropDown={isOpenDropDown} />
+        </div>
       </div>
     </div>
   );

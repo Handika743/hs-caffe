@@ -27,18 +27,25 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
   };
   const handleClick = session ? handleLogout : handleLogin;
 
+  const truncateChars = (str, maxChars = 10) => {
+    if (!str) return "";
+    return str.length <= maxChars ? str : str.slice(0, maxChars) + "...";
+  };
+
   return (
     <div className="h-full  flex flex-row items-center relative">
       <div
         className="flex font-bold border-2 border-secondary p-1.5 rounded-2xl items-center gap-4 min-w-[150px] justify-between "
         onClick={click}
       >
-        <div className="w-full text-center">
+        <div className="w-full text-center cursor-pointer">
           {session ? (
             <>
               <h1 className="md:text-lg text-base">
                 <span className="text-secondary">Halo! </span>
-                <span className="uppercase">{session?.user.name}</span>
+                <span className="uppercase">
+                  {truncateChars(session?.user.name)}
+                </span>
               </h1>
             </>
           ) : (
@@ -63,21 +70,29 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
         </div>
       </div>
       <div
-        className={`absolute top-20 bg-primary border-2 border-secondary w-full p-2 rounded-2xl origin-top scale-y-0 duration-300 ease-in-out  ${
-          isOpenDropDown ? "scale-y-100" : "scale-y-0"
-        }`}
+        className={`absolute bottom-15 md:top-20 md:bottom-auto origin-bottom md:origin-top bg-primary border-2 border-secondary w-full p-2 rounded-2xl overflow-hidden transform duration-300 ease-in-out transition-all
+    ${
+      isOpenDropDown
+        ? "opacity-100 scale-y-100 pointer-events-auto"
+        : "opacity-0 scale-y-0 pointer-events-none"
+    }`}
       >
         {session && (
           <ul className="flex flex-col items-start justify-start text-start text-lg font-semibold">
-            <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-4 hover:text-secondary"
-              >
-                <LayoutDashboard className="md:hidden" />
-                Dashboard
-              </Link>
-            </li>
+            {session.user.role === "Admin" ? (
+              <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-4 hover:text-secondary"
+                >
+                  <LayoutDashboard className="md:hidden" />
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
+
             <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
               <Link
                 href="/keranjang"
@@ -91,11 +106,13 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
         )}
 
         <div
-          className={`${actionStyle} rounded-2xl  hover:border-secondary w-full border-transparent duration-200 py-2 mt-2`}
+          className={`${actionStyle} rounded-2xl  hover:border-secondary w-full border-transparent duration-200 py-2 ${
+            session ? "mt-2" : ""
+          }`}
         >
           <button
             onClick={handleClick}
-            className={`flex items-center gap-4 text-center uppercase justify-center w-full font-semibold text-lg`}
+            className={`flex items-center  text-center uppercase justify-center w-full font-semibold text-lg`}
           >
             {actionLabel}
           </button>

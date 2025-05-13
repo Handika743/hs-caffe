@@ -26,11 +26,14 @@ const Navbar = () => {
           <Logo />
         </div>
         <div className="">
-          <NavMenu isOpen={isOpen} session={session} />
+          <NavMenu
+            isOpen={isOpen}
+            session={session}
+            isOpenDropDown={isOpenDropDown}
+            click={handleUserInfoDropDown}
+          />
         </div>
-        <div
-        // className="hidden md:block"
-        >
+        <div className="hidden md:block">
           <UserInfoDropDown
             setIsOpenDropDown={setIsOpenDropDown}
             isOpenDropDown={isOpenDropDown}
