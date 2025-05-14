@@ -7,6 +7,7 @@ import LoadingPage from "../loading";
 import EditKeranjangModal from "@/components/Keranjang/KeranjangMenu/EditKeranjangModal";
 import DeleteKeranjangModal from "@/components/Keranjang/KeranjangMenu/DeleteKeranjangModal";
 import OrderComponent from "@/components/Keranjang/KeranjangMenu/OrderComponent";
+import OrderModal from "@/components/Keranjang/KeranjangMenu/OrderModal";
 
 const KeranjangPage = () => {
   const { data: session } = useSession();
@@ -15,6 +16,8 @@ const KeranjangPage = () => {
   const [isEditModal, setIsEditModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [isOrderModal, setIsOrderModal] = useState(false);
 
   const fetchKeranjang = async () => {
     if (!session) return;
@@ -32,8 +35,6 @@ const KeranjangPage = () => {
       fetchKeranjang();
     }
   }, [session]);
-
-  const [checkedItems, setCheckedItems] = useState([]);
 
   const handleSetItem = (e, item) => {
     const isChecked = e.target.checked;
@@ -64,10 +65,21 @@ const KeranjangPage = () => {
     }
     console.log("Checked items:", checkedItems);
   };
+
+  const handleOrderModal = () => {
+    if (checkedItems.length === 0) {
+      alert("Pilih item terlebih dahulu");
+      return;
+    }
+
+    setIsOrderModal((prev) => !prev);
+  };
   return (
     <>
       <div className="px-10 flex flex-col">
-        <h1 className="font-bold text-2xl text-center p-10">Keranjang</h1>
+        <h1 className="font-bold text-2xl text-center p-10 text-stroke text-trirdary">
+          Keranjang
+        </h1>
         {isLoading ? (
           <LoadingPage />
         ) : (
@@ -98,7 +110,18 @@ const KeranjangPage = () => {
         </div>
       </div>
       <div>
-        <OrderComponent checkedItems={checkedItems} />
+        <OrderComponent
+          checkedItems={checkedItems}
+          handleOrderModal={handleOrderModal}
+        />
+      </div>
+      <div>
+        <OrderModal
+          checkedItems={checkedItems}
+          isOrderModal={isOrderModal}
+          handleOrderModal={handleOrderModal}
+          setCheckedItems={setCheckedItems}
+        />
       </div>
     </>
   );

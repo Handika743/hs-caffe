@@ -66,3 +66,7 @@ input[type="number"] {
   position: relative;
   z-index: 1;
 }
+.text-stroke {
+  text-shadow: -1px -1px 0 #9e7148, 1px -1px 0 #9e7148, -1px 1px 0 #9e7148,
+    1px 1px 0 #9e7148;
+}

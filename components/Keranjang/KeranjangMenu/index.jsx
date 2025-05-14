@@ -19,7 +19,7 @@ const KeranjangMenu = ({
         <>
           <div>
             <button
-              className="bg-trirdary text-secondary p-2 rounded-md"
+              className="bg-trirdary text-secondary p-2 rounded-md border-2 border-secondary"
               onClick={handleCheckAll}
             >
               Pilih Semua

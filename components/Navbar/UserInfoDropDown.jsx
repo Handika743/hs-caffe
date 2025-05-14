@@ -8,6 +8,7 @@ import {
   ChevronUp,
   ShoppingBasket,
   LayoutDashboard,
+  ListOrdered,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -85,7 +86,7 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
                   href="/dashboard"
                   className="flex items-center gap-4 hover:text-secondary"
                 >
-                  <LayoutDashboard className="md:hidden" />
+                  <LayoutDashboard />
                   Dashboard
                 </Link>
               </li>
@@ -98,8 +99,17 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
                 href="/keranjang"
                 className="flex items-center gap-4 hover:text-secondary"
               >
-                <ShoppingBasket className="md:hidden" />
+                <ShoppingBasket className="" />
                 Keranjang
+              </Link>
+            </li>
+            <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
+              <Link
+                href="/pesanan"
+                className="flex items-center gap-4 hover:text-secondary"
+              >
+                <ListOrdered />
+                Pesanan
               </Link>
             </li>
           </ul>

@@ -75,7 +75,7 @@ const DeleteKeranjangModal = ({
           <div className="bg-secondary w-full h-[2px]"></div>
           <div className="flex flex-row py-4 justify-between items-center">
             {srcImage ? (
-              <div className="relative rounded-lg overflow-hidden md:w-[100px] md:h-[100px] w-[50px] h-[50px]">
+              <div className="relative rounded-lg overflow-hidden md:w-[100px] md:h-[100px] w-[100px] h-[100px]">
                 <Image
                   src={srcImage}
                   fill
@@ -100,15 +100,15 @@ const DeleteKeranjangModal = ({
                       Rp {Number(totalHarga).toLocaleString("id-ID")}
                     </td>
                   </tr>
-                  <tr>
-                    <td className="px-2">Catatan</td>
-                    <td className="px-2">:</td>
-                  </tr>
                 </tbody>
               </table>
 
               <p className="px-2">{note}</p>
             </div>
+          </div>
+          <div>
+            <h4 className="font-semibold">Catatan :</h4>
+            <p>{note}</p>
           </div>
           <div className="flex flex-row gap-4 justify-between items-center my-4">
             <button
