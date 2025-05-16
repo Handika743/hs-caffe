@@ -59,7 +59,7 @@ const PesanModal = ({
       setIsCreated(true);
       alert("Menu Ditambahkan Ke Keranjang");
       setIsOpenModal(false); // Tutup modal setelah berhasil
-      router.refresh();
+      window.location.reload();
     } else {
       // Tambahkan penanganan error jika permintaan gagal
       console.error("Gagal menambahkan ke keranjang:", result);

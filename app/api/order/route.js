@@ -74,7 +74,6 @@ export async function POST(req) {
 export async function GET(req) {
   const session = await auth();
   const user_id = session.user.id;
-  // Ambil user_id dari header atau session
 
   if (!user_id) {
     return new Response("User ID not found", { status: 400 });
@@ -82,26 +81,35 @@ export async function GET(req) {
 
   const order = await prisma.Order.findMany({
     where: { user_id },
-    orderBy: {
-      created_at: "desc", // Ambil order paling baru
+    include: {
+      order_items: true,
     },
+    orderBy: { created_at: "desc" },
   });
-
+  console.log(order);
   if (!order) {
     return new Response("order not found", { status: 404 });
   }
 
-  const orderItems = await prisma.orderItem.findMany({
-    where: { order_id: order.id },
-    // include: {
-    //   menu: {
+  return new Response(JSON.stringify(order, bigintReplacer));
+}
 
-    //     select: { nama_menu: true, image: true, harga: true },
-    //   },
-    // },
+export async function DELETE(req) {
+  const { id } = await req.json();
+
+  const cancelOrder = await prisma.Order.delete({
+    where: { id },
+    include: {
+      order_items: true,
+    },
   });
-
-  return new Response(
-    JSON.stringify({ order, items: orderItems }, bigintReplacer)
-  );
+  if (cancelOrder) {
+    return new Response(JSON.stringify({ status: 200, isCreated: true }), {
+      status: 200,
+    });
+  } else {
+    return new Response(JSON.stringify({ status: 500, isCreated: false }), {
+      status: 500,
+    });
+  }
 }

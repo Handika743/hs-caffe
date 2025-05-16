@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOut, signIn } from "next-auth/react";
@@ -18,6 +18,9 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
   const actionURL = session ? "/api/auth/signout" : "/api/auth/signin";
   const actionStyle = session ? "bg-red-500" : "bg-green-500";
   const router = useRouter();
+  const [keranjangMenu, setKeranjangMenu] = useState([]);
+  const [orderMenu, setOrder] = useState([]);
+
   const handleLogout = async () => {
     await signOut({
       callbackUrl: "/",
@@ -33,6 +36,24 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
     return str.length <= maxChars ? str : str.slice(0, maxChars) + "...";
   };
 
+  const fetchKeranjangNotif = async () => {
+    const response = await fetch("/api/keranjang");
+    if (response.ok) {
+      const data = await response.json();
+      setKeranjangMenu(data);
+    }
+  };
+  const fetchOrderNotif = async () => {
+    const response = await fetch("/api/order");
+    if (response.ok) {
+      const data = await response.json();
+      setOrder(data);
+    }
+  };
+  useEffect(() => {
+    fetchKeranjangNotif();
+    fetchOrderNotif();
+  }, []);
   return (
     <div className="h-full  flex flex-row items-center relative">
       <div
@@ -100,7 +121,10 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
                 className="flex items-center gap-4 hover:text-secondary"
               >
                 <ShoppingBasket className="" />
-                Keranjang
+                Keranjang{" "}
+                <span className="bg-red-600 px-3 rounded-full">
+                  {keranjangMenu.length}
+                </span>
               </Link>
             </li>
             <li className="border-b-2 hover:border-secondary w-full border-transparent duration-200 py-2">
@@ -109,7 +133,10 @@ const UserInfoDropDown = ({ isOpenDropDown, click }) => {
                 className="flex items-center gap-4 hover:text-secondary"
               >
                 <ListOrdered />
-                Pesanan
+                Pesanan{" "}
+                <span className="bg-red-600 px-3 rounded-full">
+                  {orderMenu.length}
+                </span>
               </Link>
             </li>
           </ul>

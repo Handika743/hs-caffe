@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const LoadingPage = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white">
+    <div className="flex justify-center items-center min-h-screen bg-transparent">
       <div className="coffee-shake">
         <Image
           src="/kopsuren-removebg.png"

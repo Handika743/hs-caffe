@@ -44,6 +44,7 @@ const OrderModal = ({
       alert("Pesanan Berhasil Di Buat");
       setCheckedItems([]);
       handleOrderModal();
+      window.location.reload();
     } else {
       alert("Gagal Buat Pesanan .");
     }
